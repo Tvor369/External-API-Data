@@ -5,12 +5,37 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 // Global Styles
 import '../styles/myCustomStyles.css';
 
-// Your App
-// import your <App />
+// Pick a random pokemon 0 - 150
+
+//const randomPokemon = Math.floor(Math.random() * 151) + 1;
+
+const randomPokemon = 34;
+
+const dataSource = 'https://pokeapi.co/api/v2/pokemon/' + randomPokemon + '/';
+
+
+
+fetch(dataSource)
+  .then( response => response.json())
+  .then( theData => {
+
+	console.log(theData.name);
+
+
+	//console.log(theData.results.map( pokemon => pokemon.name ));
+
+  })
+
+
+  
+
+
 ---
 
 <BaseLayout>
+
+	<h1>Who's that pokemon?</h1>
 	
-	✅ Check ✅ Check
+	<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/132.png" alt="">
 
 </BaseLayout>
