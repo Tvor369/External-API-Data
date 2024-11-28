@@ -5,30 +5,44 @@
 
 /* Custom Styling */
 body {
-    background-color: #ba2727;
+    background-color: #ffffff;
     font-family: sans-serif;
 }
 
 h1 {
     color: #333;
-    font-size: 2rem;
+    font-size: 3rem;
     text-align: center;
 }
 
 h2 {
     color: #333;
-    font-size: 1.5rem;
+    font-size: 2rem;
     text-align: center;
 }
 
 h3 {
     color: #333;
-    font-size: 1rem;
+    font-size: 1.5rem;
     text-align: center;
 }
-
 
 img {
     display: block;
     margin: 0 auto;
+    padding: .25in;
 }
+
+#pokemonArt {
+    display: block;
+    margin: 0 auto;
+    padding: .25in;
+    max-height: 4in;
+    max-width: 4in;
+}
+
+.sprite {
+    display: block;
+    margin: 0 auto;
+}
+

@@ -23,7 +23,9 @@ import '../styles/myCustomStyles.css';
 		const pokemonName = document.querySelector('#pokemonName');
 		const pokemonTypes = document.querySelector('#pokemonTypes');
 		const pokemonAbilities = document.querySelector('#pokemonAbilities');
+		const pokemonArt = document.querySelector('#pokemonArt') as HTMLImageElement;
 		const pokemonFrontSprite = document.querySelector('#pokemonFrontSprite') as HTMLImageElement;
+		const pokemonBackSprite = document.querySelector('#pokemonBackSprite') as HTMLImageElement;
 
 		// Fetch and Set
 		fetch(dataSource)
@@ -31,9 +33,12 @@ import '../styles/myCustomStyles.css';
 		.then( theData => {
 
 			pokemonName.textContent = 'Name: ' + theData.species.name.charAt(0).toUpperCase() + theData.species.name.slice(1);
-			pokemonTypes.textContent = 'Types: ' + theData.types.map( type => type.type.name ).join(', ');
+			pokemonTypes.textContent = 'Type: ' + theData.types.map( type => type.type.name ).join('/');
 			pokemonAbilities.textContent = 'Abilities: ' + theData.abilities.map( ability => ability.ability.name ).join(', ');
-			pokemonFrontSprite.src = theData.sprites.front_default;
+			pokemonArt.src = theData.sprites.other.dream_world.front_default;
+			pokemonFrontSprite.src = theData['sprites']['versions']['generation-v']['black-white']['animated']['front_default'];
+			pokemonBackSprite.src = theData['sprites']['versions']['generation-v']['black-white']['animated']['back_default'];
+			//^ properties with hyphens must be accessed with bracket notation
 
 		});
 	</script>
@@ -41,10 +46,15 @@ import '../styles/myCustomStyles.css';
 	<h1> Who's that pokemon? </h1>
 
 
-	<h2 id="pokemonName">  </h2>
-	<img id="pokemonFrontSprite" src="" alt="">
-	<h2 id="pokemonTypes">  </h2>
-	<h2 id="pokemonAbilities">  </h2>
+	<h2 id="pokemonName"> Name: </h2>
+	<img id="pokemonArt" src="" alt="Artwork">
+	<h3 id="pokemonTypes"> Type: </h2>
+	<h3 id="pokemonAbilities"> Abilities: </h2>
+		<div class="block grid grid-cols-2 gap-0">
+			<img id="pokemonFrontSprite" class="sprite" src="" alt="Front_Sprite">
+			<img id="pokemonBackSprite" class="sprite" src="" alt="Back_Sprite">
+		</div>
+
 	
 	
 
