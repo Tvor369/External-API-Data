@@ -6,7 +6,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import '../styles/myCustomStyles.css';
 
 
-
 ---
 
 <BaseLayout>
@@ -26,6 +25,30 @@ import '../styles/myCustomStyles.css';
 		const pokemonArt = document.querySelector('#pokemonArt') as HTMLImageElement;
 		const pokemonFrontSprite = document.querySelector('#pokemonFrontSprite') as HTMLImageElement;
 		const pokemonBackSprite = document.querySelector('#pokemonBackSprite') as HTMLImageElement;
+		const pokemonMoves = document.querySelector('#pokemonMoves');
+
+		// Background Color based on primary type
+		const body = document.querySelector('body');
+		const color = {
+			normal: '#A8A77A',
+			fire: '#EE8130',
+			water: '#6390F0',
+			electric: '#F7D02C',
+			grass: '#7AC74C',
+			ice: '#96D9D6',
+			fighting: '#C22E28',
+			poison: '#A33EA1',
+			ground: '#E2BF65',
+			flying: '#A98FF3',
+			psychic: '#F95587',
+			bug: '#A6B91A',
+			rock: '#B6A136',
+			ghost: '#735797',
+			dragon: '#6F35FC',
+			dark: '#705746',
+			steel: '#B7B7CE',
+			fairy: '#D685AD'
+		};
 
 		// Fetch and Set
 		fetch(dataSource)
@@ -40,7 +63,75 @@ import '../styles/myCustomStyles.css';
 			pokemonBackSprite.src = theData['sprites']['versions']['generation-v']['black-white']['animated']['back_default'];
 			//^ properties with hyphens must be accessed with bracket notation
 
+			// Get 4 random moves
+			// const moves = theData.moves;
+			// const randomMoves = moves.sort(() => 0.5 - Math.random()).slice(0, 4);
+			// pokemonMoves.textContent = 'Moves: ' + randomMoves.map( move => move.move.name ).join(', ');
+
+			pokemonMoves.textContent = 'Moves: ' + theData.moves.map( move => move.move.name ).join(', ');
+
+			// Set background color based on primary type
+			switch(theData.types[0].type.name) {
+			case 'normal':
+				body.style.backgroundColor = color.normal;
+				break;
+			case 'fire':
+				body.style.backgroundColor = color.fire;
+				break;
+			case 'water':
+				body.style.backgroundColor = color.water;
+				break;
+			case 'electric':
+				body.style.backgroundColor = color.electric;
+				break;
+			case 'grass':
+				body.style.backgroundColor = color.grass;
+				break;
+			case 'ice':
+				body.style.backgroundColor = color.ice;
+				break;
+			case 'fighting':
+				body.style.backgroundColor = color.fighting;
+				break;
+			case 'poison':
+				body.style.backgroundColor = color.poison;
+				break;
+			case 'ground':
+				body.style.backgroundColor = color.ground;
+				break;
+			case 'flying':
+				body.style.backgroundColor = color.flying;
+				break;
+			case 'psychic':
+				body.style.backgroundColor = color.psychic;
+				break;
+			case 'bug':
+				body.style.backgroundColor = color.bug;
+				break;
+			case 'rock':
+				body.style.backgroundColor = color.rock;
+				break;
+			case 'ghost':
+				body.style.backgroundColor = color.ghost;
+				break;
+			case 'dragon':
+				body.style.backgroundColor = color.dragon;
+				break;
+			case 'dark':
+				body.style.backgroundColor = color.dark;
+				break;
+			case 'steel':
+				body.style.backgroundColor = color.steel;
+				break;
+			case 'fairy':
+				body.style.backgroundColor = color.fairy;
+				break;
+			default:
+				body.style.backgroundColor = 'white';
+			}
+
 		});
+
 	</script>
 
 	<h1> Who's that pokemon? </h1>
@@ -50,10 +141,13 @@ import '../styles/myCustomStyles.css';
 	<img id="pokemonArt" src="" alt="Artwork">
 	<h3 id="pokemonTypes"> Type: </h2>
 	<h3 id="pokemonAbilities"> Abilities: </h2>
-		<div class="block grid grid-cols-2 gap-0">
+		<div class="block grid grid-cols-2 w-56 justify-self-center">
 			<img id="pokemonFrontSprite" class="sprite" src="" alt="Front_Sprite">
 			<img id="pokemonBackSprite" class="sprite" src="" alt="Back_Sprite">
 		</div>
+
+	<h3 id="pokemonMoves"> Moves:</h3>
+
 
 	
 	

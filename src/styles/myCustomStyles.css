@@ -44,5 +44,7 @@ img {
 .sprite {
     display: block;
     margin: 0 auto;
+    max-height: 1.5in;
+    max-width: 1.5in;
 }
 
