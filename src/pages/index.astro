@@ -5,37 +5,47 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 // Global Styles
 import '../styles/myCustomStyles.css';
 
-// Pick a random pokemon 0 - 150
-
-//const randomPokemon = Math.floor(Math.random() * 151) + 1;
-
-const randomPokemon = 34;
-
-const dataSource = 'https://pokeapi.co/api/v2/pokemon/' + randomPokemon + '/';
-
-
-
-fetch(dataSource)
-  .then( response => response.json())
-  .then( theData => {
-
-	console.log(theData.name);
-
-
-	//console.log(theData.results.map( pokemon => pokemon.name ));
-
-  })
-
-
-  
 
 
 ---
 
 <BaseLayout>
 
-	<h1>Who's that pokemon?</h1>
+	<script>
+		
+		// Random Pokemon IDs from gen1 to gen4
+		const randomPokemon = Math.floor(Math.random() * 493) + 1;
+
+		// Source
+		const dataSource = 'https://pokeapi.co/api/v2/pokemon/' + randomPokemon;
+
+		// Get page	elements
+		const pokemonName = document.querySelector('#pokemonName');
+		const pokemonTypes = document.querySelector('#pokemonTypes');
+		const pokemonAbilities = document.querySelector('#pokemonAbilities');
+		const pokemonFrontSprite = document.querySelector('#pokemonFrontSprite') as HTMLImageElement;
+
+		// Fetch and Set
+		fetch(dataSource)
+		.then( response => response.json())
+		.then( theData => {
+
+			pokemonName.textContent = 'Name: ' + theData.species.name.charAt(0).toUpperCase() + theData.species.name.slice(1);
+			pokemonTypes.textContent = 'Types: ' + theData.types.map( type => type.type.name ).join(', ');
+			pokemonAbilities.textContent = 'Abilities: ' + theData.abilities.map( ability => ability.ability.name ).join(', ');
+			pokemonFrontSprite.src = theData.sprites.front_default;
+
+		});
+	</script>
+
+	<h1> Who's that pokemon? </h1>
+
+
+	<h2 id="pokemonName">  </h2>
+	<img id="pokemonFrontSprite" src="" alt="">
+	<h2 id="pokemonTypes">  </h2>
+	<h2 id="pokemonAbilities">  </h2>
 	
-	<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/132.png" alt="">
+	
 
 </BaseLayout>
