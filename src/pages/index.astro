@@ -5,6 +5,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 // Global Styles
 import '../styles/myCustomStyles.css';
 
+// Components
 
 ---
 
@@ -57,7 +58,7 @@ import '../styles/myCustomStyles.css';
 
 			pokemonName.textContent = 'Name: ' + theData.species.name.charAt(0).toUpperCase() + theData.species.name.slice(1);
 			pokemonTypes.textContent = 'Type: ' + theData.types.map( type => type.type.name ).join('/');
-			pokemonAbilities.textContent = 'Abilities: ' + theData.abilities.map( ability => ability.ability.name ).join(', ');
+			//pokemonAbilities.textContent = 'Abilities: ' + theData.abilities.map( ability => ability.ability.name ).join(', ');
 			pokemonArt.src = theData.sprites.other.dream_world.front_default;
 			pokemonFrontSprite.src = theData['sprites']['versions']['generation-v']['black-white']['animated']['front_default'];
 			pokemonBackSprite.src = theData['sprites']['versions']['generation-v']['black-white']['animated']['back_default'];
@@ -66,9 +67,8 @@ import '../styles/myCustomStyles.css';
 			// Get 4 random moves
 			// const moves = theData.moves;
 			// const randomMoves = moves.sort(() => 0.5 - Math.random()).slice(0, 4);
-			// pokemonMoves.textContent = 'Moves: ' + randomMoves.map( move => move.move.name ).join(', ');
 
-			pokemonMoves.textContent = 'Moves: ' + theData.moves.map( move => move.move.name ).join(', ');
+			//pokemonMoves.textContent = 'Moves: ' + theData.moves.map( move => move.move.name ).join(', ');
 
 			// Set background color based on primary type
 			switch(theData.types[0].type.name) {
@@ -130,6 +130,37 @@ import '../styles/myCustomStyles.css';
 				body.style.backgroundColor = 'white';
 			}
 
+			function convertTF(bool) {
+				return bool ? 'Yes' : 'No';
+			}
+
+			function convert0toDash(num) {
+				return num === 0 ? '-' : num;
+			}
+
+			// Generate table rows for abilities
+			const abilitiesTableBody = document.querySelector('#abilitiesTable') as HTMLElement;
+			abilitiesTableBody.innerHTML = theData.abilities.map(ability => `
+				<tr>
+					<td>${ability.ability.name}</td>
+					<td>${convertTF(ability.is_hidden)}</td>
+				</tr>
+			`).join('');
+
+			// Generate table rows for moves
+			const movesTableBody = document.querySelector('#movesTable') as HTMLElement;
+			movesTableBody.innerHTML = theData.moves.map(move => `
+				<tr>
+					<td>${move.move.name}</td>
+					<td>${convert0toDash(move.version_group_details[0].level_learned_at)}</td>
+					<td>${move.version_group_details[0].move_learn_method.name}</td>
+				</tr>
+			`).join('');
+			
+			// Set table background color to be lighter than body
+			movesTableBody.style.backgroundColor = 'rgba(255, 255, 255, 0.6)';
+			abilitiesTableBody.style.backgroundColor = 'rgba(255, 255, 255, 0.6)';
+
 		});
 
 	</script>
@@ -141,12 +172,43 @@ import '../styles/myCustomStyles.css';
 	<img id="pokemonArt" src="" alt="Artwork">
 	<h3 id="pokemonTypes"> Type: </h2>
 	<h3 id="pokemonAbilities"> Abilities: </h2>
-		<div class="block grid grid-cols-2 w-56 justify-self-center">
+		<div class="overflow-x-auto w-72 justify-self-center shadow">
+			<table class="table rounded-sm">
+			  <tbody id="abilitiesTable">
+				<!-- head -->
+				<thead style="background-color: rgba(195, 202, 208, 0.500);">
+					<tr>
+					  <th>Ability</th>
+					  <th>Hidden?</th>
+					</tr>
+				</thead>
+			  </tbody>
+			</table>
+		  </div>	
+
+<!-- Gen 5 Animated Sprites -->
+	<h3 id="pokemonSprites"> Sprites: </h2>
+		<div class="block grid grid-cols-2 gap-1 justify-self-center box-border" style="background-color: rgba(255, 255, 255, 0.4);">
 			<img id="pokemonFrontSprite" class="sprite" src="" alt="Front_Sprite">
 			<img id="pokemonBackSprite" class="sprite" src="" alt="Back_Sprite">
 		</div>
 
+<!-- Use a table to list out moves -->
 	<h3 id="pokemonMoves"> Moves:</h3>
+	<div class="overflow-x-auto w-96 max-h-80 justify-self-center shadow">
+    <table class="table">
+	  <tbody id="movesTable">
+		<!-- head -->
+		<thead style="background-color: rgba(195, 202, 208, 0.500);">
+			<tr>
+			  <th>Move Name</th>
+			  <th>Learned At</th>
+			  <th>Method</th>
+			</tr>
+		</thead>
+	  </tbody>
+    </table>
+  </div>	
 
 
 	

@@ -1,7 +1,7 @@
 /* Diagnostic Styling */
-* {
+/* * {
     outline: 1px dotted gray;
-}
+} */
 
 /* Custom Styling */
 body {
@@ -22,6 +22,7 @@ h2 {
 }
 
 h3 {
+    margin-top: 12px;
     color: #333;
     font-size: 1.5rem;
     text-align: center;
